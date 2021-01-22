@@ -21,7 +21,10 @@
   <button id="btnShare" onclick="shareMsg()">แชร์ให้ เพื่อน</button>
   <button id="btnLogin" onclick="liff.login()">Log In</button>
   <button id="closeWindow" onclick="closeWindow()">พักสายตาสักหน่อย</button>
-       
+    <button id="btnShare" onclick="shareMsg()">Share Target Picker</button>
+    <button onclick="openWindow()">Open Window</button>
+    <button id="btnLogOut" onclick="logout()">Log Out</button>
+    <button id="btnClose" onclick="closeWindow()">Close</button>
        </div>
     </div>
 
@@ -97,7 +100,7 @@
       }
     function openWindow() {
         liff.openWindow({
-          url: 'https://spankbang.com/categories',
+          url: 'https://spankbang.com/s',
           external: true
         })
       }
@@ -122,7 +125,7 @@
         if (!liff.isInClient()) {
           getUserProfile()
           createUniversalLink()
-          document.getElementById("closeWindow").style.display = "block"
+          document.getElementById("btnClose").style.display = "block"
         }
       } else {
         document.getElementById("btnLogin").style.display = "block"
