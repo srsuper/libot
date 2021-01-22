@@ -4,152 +4,70 @@
   <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1" />
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <title>My LIFF App</title>
-  <style>
-    button { display: none; width: 50%; padding: 16px 0; margin: 16px auto }
-  </style>
+  <title>ดูหนังกัน</title>
 </head>
 <body>
   <div class="row" style="margin: 10px">
      <div class="col-12" style="margin: 10px">
-       <label>姓名</label>
-       
+       <label>ดูหนังป่ะ</label>
+   <img id="pictureUrl"/>
+    <p id="userId"><b>userId: </b></p>
+    <p id="displayName"><b>displayName: </b></p>    
   <iframe width="100%" height="315" src="https://spankbang.com/4ukox/embed/" frameborder="0" scrolling="no" allowfullscreen></iframe>
-  <button id="btnShare" onclick="sendShare()">Share Target Picker</button>
+  <button id="btnShare" onclick="shareMsg()">แชร์ให้ เพื่อน</button>
   <button id="btnLogin" onclick="liff.login()">Log In</button>
-  <button id="btnLogOut" onclick="logOut()">Log Out</button>
+  <button id="closeWindow" onclick="closeWindow()">พักสายตาสักหน่อย</button>
        </div>
     </div>
   <script src="https://static.line-scdn.net/liff/edge/versions/2.7.1/sdk.js"></script>
-  <script>
-    async function sendShare() {
-      const result = await liff.shareTargetPicker([
-        {
-          "type": "flex",
-          "altText": "Flex Message",
-          "contents": {
-            "type": "bubble",
-            "body": {
-              "type": "box",
-              "layout": "vertical",
-              "spacing": "md",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "BROWN'S ADVENTURE",
-                  "size": "xl",
-                  "gravity": "center",
-                  "weight": "bold",
-                  "wrap": true
-                },
-                {
-                  "type": "box",
-                  "layout": "vertical",
-                  "spacing": "sm",
-                  "margin": "lg",
-                  "contents": [
-                    {
-                      "type": "box",
-                      "layout": "baseline",
-                      "spacing": "sm",
-                      "contents": [
-                        {
-                          "type": "text",
-                          "text": "Date",
-                          "flex": 1,
-                          "size": "sm",
-                          "color": "#AAAAAA"
-                        },
-                        {
-                          "type": "text",
-                          "text": "Monday 25, 9:00PM",
-                          "flex": 4,
-                          "size": "sm",
-                          "color": "#666666",
-                          "wrap": true
-                        }
-                      ]
-                    },
-                    {
-                      "type": "box",
-                      "layout": "baseline",
-                      "spacing": "sm",
-                      "contents": [
-                        {
-                          "type": "text",
-                          "text": "Place",
-                          "flex": 1,
-                          "size": "sm",
-                          "color": "#AAAAAA"
-                        },
-                        {
-                          "type": "text",
-                          "text": "LINE Thailand",
-                          "flex": 4,
-                          "size": "sm",
-                          "color": "#666666",
-                          "wrap": true
-                        }
-                      ]
-                    },
-                    {
-                      "type": "box",
-                      "layout": "vertical",
-                      "margin": "xxl",
-                      "contents": [
-                        {
-                          "type": "spacer"
-                        },
-                        {
-                          "type": "image",
-                          "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/linecorp_code_withborder.png",
-                          "size": "xl",
-                          "aspectMode": "cover"
-                        },
-                        {
-                          "type": "text",
-                          "text": "You can enter the theater by using this code instead of a ticket",
-                          "margin": "xxl",
-                          "size": "xs",
-                          "color": "#AAAAAA",
-                          "wrap": true
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          }
-        }
-      ])
-      if (result) {
-        alert(`[${result.status}] Message sent!`)
-      } else {
-        const [majorVer, minorVer, patchVer] = (liff.getLineVersion() || "").split('.');
+ <script>
+   
+     function createUniversalLink() {}
 
-        if (minorVer === undefined) {
-          alert('ShareTargetPicker was canceled in external browser')
-          return
-        }
-
-        if (parseInt(majorVer) >= 10 && parseInt(minorVer) >= 10 && parseInt(patchVer) > 0) {
-          alert('ShareTargetPicker was canceled in LINE app')
-        }
+      async function shareMsg() {
+        await liff.shareTargetPicker([
+          {
+            type: 'uri',
+            text: 'https://lin.ee/BWFihRD'
+          },
+          ...messages
+        ])
       }
-    }
+    
+     function closeWindow() {
+        liff.closeWindow()
+      }
+    function openWindow() {
+        liff.openWindow({
+          url: 'https://spankbang.com/categories',
+          external: true
+        })
+      }
     function logOut() {
       liff.logout()
       window.location.reload()
     }
+     async function getUserProfile() {
+        const profile = await liff.getProfile()
+        document.querySelector('#pictureUrl').src = profile.pictureUrl
+        document.querySelector('#userId').append(profile.userId)
+        document.querySelector('#statusMessage').append(profile.statusMessage)
+        document.querySelector('#displayName').append(profile.displayName)
+        document
+          .querySelector('#decodedIDToken')
+          .append(profile?.getDecodedIDToken()?.email)
+      }
     async function main() {
       await liff.init({ liffId: "1655602828-kpzKQobJ" })
       if (liff.isLoggedIn()) {
         document.getElementById("btnShare").style.display = "block"
         if (!liff.isInClient()) {
-          document.getElementById("btnLogOut").style.display = "block"
+          getUserProfile()
+          createUniversalLink()
+          document.getElementById("closeWindow").style.display = "block"
         }
       } else {
         document.getElementById("btnLogin").style.display = "block"
@@ -157,5 +75,8 @@
     }
     main()
   </script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
