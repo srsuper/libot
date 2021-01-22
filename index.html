@@ -8,6 +8,32 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <title>ดูหนังกัน</title>
+  <style>
+    button {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  margin: 8px auto
+}
+
+#pictureUrl {
+  display: block;
+  margin: 0 auto;
+  width: 12%;
+  display: -moz-box;
+  display: -webkit-box;
+  display: box;
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  box-pack: center;
+  box-align: center;
+  -moz-border-radius: 100px;
+  -webkit-border-radius: 100px;
+  border-radius: 100px;
+}
+     </style>
 </head>
   
 <body>
@@ -24,8 +50,7 @@
     <button id="btnClose" onclick="closeWindow()">พักสายตาสักหน่อย</button>
        </div>
     </div>
-
-
+<div class="container-fluid">
 <div class="row">
 <a href="https://spankbang.com/category/amateur/?o=hot"><img src="https://spankbang.com/static/desktop/Images/categories/ids/1.jpg"><span>สมัครเล่น</span></a>
 <a href="https://spankbang.com/category/anal/?o=hot"><img src="https://spankbang.com/static/desktop/Images/categories/ids/2.jpg"><span>ทวารหนัก</span></a>
@@ -77,10 +102,18 @@
 <a href="https://spankbang.com/category/vintage/?o=hot"><img src="https://spankbang.comhttps://spankbang.com/static/desktop/Images/categories/ids/45.jpg"><span>ย้อนยุค</span></a>
 <a href="https://spankbang.com/category/vr/?o=hot"><img src="https://spankbang.comhttps://spankbang.com/static/desktop/Images/categories/ids/51.jpg"><span>VR</span></a>
 </div>
+  </div>
   <script src="https://static.line-scdn.net/liff/edge/versions/2.7.1/sdk.js"></script>
  <script>
    
-     function createUniversalLink() {}
+       function createUniversalLink() {
+      const link1 = liff.permanentLink.createUrl()
+      document.getElementById("universalLink1").append(link1)
+
+      liff.permanentLink.setExtraQueryParam('param=9')
+      const link2 = liff.permanentLink.createUrl()
+      document.getElementById("universalLink2").append(link2)
+    }
 
       async function shareMsg() {
         await liff.shareTargetPicker([
@@ -105,28 +138,40 @@
       liff.logout()
       window.location.reload()
     }
-     async function getUserProfile() {
-        const profile = await liff.getProfile()
-        document.querySelector('#pictureUrl').src = profile.pictureUrl
-        document.querySelector('#userId').append(profile.userId)
-        document.querySelector('#statusMessage').append(profile.statusMessage)
-        document.querySelector('#displayName').append(profile.displayName)
-        document
-          .querySelector('#decodedIDToken')
-          .append(profile?.getDecodedIDToken()?.email)
+        async function getUserProfile() {
+      const profile = await liff.getProfile()
+      document.getElementById("pictureUrl").src = profile.pictureUrl
+      document.getElementById("userId").append(profile.userId)
+      document.getElementById("statusMessage").append(profile.statusMessage)
+      document.getElementById("displayName").append(profile.displayName)
+      document.getElementById("decodedIDToken").append(liff.getDecodedIDToken().email)
+    }
+       function getEnvironment() {
+      document.getElementById("os").append(liff.getOS())
+      document.getElementById("language").append(liff.getLanguage())
+      document.getElementById("version").append(liff.getVersion())
+      document.getElementById("accessToken").append(liff.getAccessToken())
+      document.getElementById("isInClient").append(liff.isInClient())
+      if (liff.isInClient()) {
+        document.getElementById("btnLogOut").style.display = "none"
+      } else {
+        document.getElementById("btnMsg").style.display = "none"
+        document.getElementById("btnScanCode").style.display = "none"
+        document.getElementById("btnClose").style.display = "none"
       }
+    }
     async function main() {
-      await liff.init({ liffId: "1655602828-kpzKQobJ" })
-      if (liff.isLoggedIn()) {
-        document.getElementById("btnShare").style.display = "block"
-        if (!liff.isInClient()) {
+      liff.ready.then(() => {
+        document.getElementById("isLoggedIn").append(liff.isLoggedIn())
+        if (liff.isLoggedIn()) {
+          getEnvironment()
           getUserProfile()
           createUniversalLink()
-          document.getElementById("btnClose").style.display = "block"
+        } else {
+          liff.login()
         }
-      } else {
-        document.getElementById("btnLogin").style.display = "block"
-      }
+      })
+      await liff.init({ liffId: "1655602828-kpzKQobJ" })
     }
     main()
   </script>
