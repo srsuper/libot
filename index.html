@@ -2,18 +2,26 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <title>My LIFF App</title>
   <style>
-    body { padding: 256px }
     button { display: none; width: 50%; padding: 16px 0; margin: 16px auto }
   </style>
 </head>
 <body>
+  <div class="row" style="margin: 10px">
+     <div class="col-12" style="margin: 10px">
+       <label>姓名</label>
+       
   <iframe width="100%" height="315" src="https://spankbang.com/4ukox/embed/" frameborder="0" scrolling="no" allowfullscreen></iframe>
   <button id="btnShare" onclick="sendShare()">Share Target Picker</button>
   <button id="btnLogin" onclick="liff.login()">Log In</button>
   <button id="btnLogOut" onclick="logOut()">Log Out</button>
+       </div>
+    </div>
   <script src="https://static.line-scdn.net/liff/edge/versions/2.7.1/sdk.js"></script>
   <script>
     async function sendShare() {
