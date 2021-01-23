@@ -6,24 +6,6 @@
 </head>
 <body>
  <iframe style='width:100%;height:100%;background-color: #1A1A1A;' scrolling='no' frameborder='0' src='//oklivetv.com/xplay/4d5459784d51.html' marginheight='0' marginwidth='0' allowtransparency='true' allowfullscreen='true'  mozallowfullscreen='true' webkitallowfullscreen='true'><p>Sorry, your current browser does not support inline framing(iframes).</p></iframe>  
-<script src="https://static.line-scdn.net/liff/edge/versions/2.7.1/sdk.js"></script>
-  <script>
-    function runApp() {
-      liff.getProfile().then(profile => {
-        document.getElementById("pictureUrl").src = profile.pictureUrl;
-        document.getElementById("userId").innerHTML = '<b>UserId:</b> ' + profile.userId;
-        document.getElementById("displayName").innerHTML = '<b>DisplayName:</b> ' + profile.displayName;
-        document.getElementById("statusMessage").innerHTML = '<b>StatusMessage:</b> ' + profile.statusMessage;
-        document.getElementById("getDecodedIDToken").innerHTML = '<b>Email:</b> ' + liff.getDecodedIDToken().email;
-      }).catch(err => console.error(err));
-    }
-    liff.init({ liffId: "1655602828-kpzKQobJ" }, () => {
-      if (liff.isLoggedIn()) {
-        runApp()
-      } else {
-        liff.login();
-      }
-    }, err => console.error(err.code, error.message));
-  </script>
+
 </body>
 </html>
